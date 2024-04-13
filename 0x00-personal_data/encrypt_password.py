@@ -1,4 +1,4 @@
-#!/usr/bin/en python3
+#!/usr/bin/env python3
 '''Encrypting password'''
 import bcrypt
 from bcrypt import hashpw
