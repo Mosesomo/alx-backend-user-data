@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 '''Personal data'''
 import re
+import os
 import logging
+import mysql.connector
 from typing import List
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
@@ -48,3 +50,20 @@ def get_logger() -> logging.Logger:
     logger.addHandler(handler)
 
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    '''Return a connector to the database'''
+    user = os.getenv('PERSONAL_DATA_DB_USERNAME') or 'root'
+    password = os.getenv('PERSONAL_DATA_DB_PASSWORD') or ""
+    host = os.getenv('PERSONAL_DATA_DB_HOST') or 'localhost'
+    db_name = os.getenv('PERSONAL_DATA_DB_NAME')
+
+    conn = mysql.connector.connect(
+        user=user,
+        password=password,
+        host=host,
+        database=db_name
+    )
+
+    return conn
