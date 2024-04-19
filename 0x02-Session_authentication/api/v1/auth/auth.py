@@ -19,6 +19,9 @@ class Auth:
         for excluded_path in excluded_paths:
             if path == excluded_path.rstrip('/'):
                 return False
+            if excluded_path[-1] == '*':
+                if path.startswith(excluded_path[:-1]):
+                    return False
         return True
 
     def authorization_header(self, request=None) -> str:
