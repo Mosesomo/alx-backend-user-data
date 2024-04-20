@@ -37,8 +37,9 @@ def before():
             '/api/v1/auth_session/login/'
         ]
         if auth.require_auth(request.path, excluded):
-            if (auth.authorization_header(request) is None and
-                auth.session_cookie(request) is None):
+            test_path = auth.authorization_header(request)
+            session_cookie = auth.session_cookie(request)
+            if test_path is None and session_cookie is None:
                 abort(401)
             if auth.current_user(request) is None:
                 abort(403)
